@@ -1,31 +1,17 @@
-import React, {useEffect, useState} from "react";
 import './App.css';
+import {useNavigate, Routes, Route, Navigate} from "react-router-dom";
+import Home from "./Component/Home";
+import MQTTComponent from "./Component/MQTTComponent";
 
 function App() {
 
-  const [backendData, setBackendData] = useState([{}])
-
-  useEffect( () => {
-    fetch("/api").then(
-        response => response.json()
-    ).then(
-        data => { setBackendData(data) }
-    )
-  }, [])
-
-
   return (
-    <div className="App">
+      <Routes>
 
-      { (typeof backendData.users === 'undefined') ? (
-          <p>Loading...</p>
-      ): (
-          backendData.users.map( (user, i) => (
-              <p key={i} className="registers">{user}</p>
-          ))
-      )}
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/mqtt" element={<MQTTComponent/>}/>
 
-    </div>
+      </Routes>
   );
 }
 
