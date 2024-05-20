@@ -30,7 +30,7 @@
 .emergency {
     margin: 30px;
     border-radius: 30px;
-    background-color: rgba(253, 184, 19, 0.6);
+    background-color: rgba(253, 184, 19, 0.7);
     padding: 20px;
 }
 
@@ -41,4 +41,24 @@
 .reg {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Combinar bordes de celda */
+}
+
+td, th {
+    border: 1px solid #ddd; /* Borde de celda */
+    padding: 8px; /* Espaciado interno */
+    text-align: center; /* Centrar el texto */
+}
+
+th {
+    background-color: rgba(253, 184, 19, 0.7);
+}
+
+.p{
+    text-align: right;
+    font-weight: bolder;
 }

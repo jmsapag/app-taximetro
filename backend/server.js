@@ -102,6 +102,7 @@ server.on('connection', socket => {
 
     socket.on('message', message => {
         console.log('Mensaje recibido:', message);
+        console.log(message)
     });
 
     socket.on('close', () => {

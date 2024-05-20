@@ -53,6 +53,17 @@ function App() {
         }
     }, [lastMessage]);
 
+    function calcularTotalViajes(registers) {
+        return registers.length;
+    }
+
+    function calcularTotalDineroGanado(registros) {
+        return registros.reduce((total, registro) => total + registro.datos_coleccion2.cost, 0);
+    }
+
+    const totalViajes = calcularTotalViajes(registers);
+    const totalDineroGanado = calcularTotalDineroGanado(registers);
+
     return (
         <div>
             <div className="header">
@@ -77,6 +88,10 @@ function App() {
                                 <strong>Usuario ID: {alert.id}</strong>
                                 <br/>
                                 <strong>Mensaje: {alert.message}</strong>
+                                <br/>
+                                <strong>Latitud: {alert.latitude}</strong>
+                                <br/>
+                                <strong>Longitud: {alert.longitude}</strong>
                                 <hr/>
                             </div>
                         ))}
@@ -91,30 +106,57 @@ function App() {
             {/* Mostrar todos los registros */}
             <div className="registers">
                 <h2>Historial de Registros</h2>
-                <hr/>
+                <br/>
                 {loading ? (
                     <p>Cargando...</p>
                 ) : error ? (
                     <p>Error: {error}</p>
                 ) : (
                     <div>
-                        {registers.map((register) => (
-                            <div key={register.id} className="reg">
-                                <div>
-                                    <strong>Usuario ID:</strong> {register.id_user}<br/>
-                                    <strong>Viaje ID:</strong> {register.id_viaje}<br/>
-                                    <strong>Tiempo:</strong> {new Date(register.time).toLocaleString()}<br/>
-                                    <strong>Coordenadas:</strong> ({register.latitud}, {register.longitude})<br/>
-                                    <div>
-                                        <strong>Coordenadas:</strong> ({register.datos_coleccion2.latitud}, {register.datos_coleccion2.longitude})<br/>
-                                        <strong>Distancia:</strong> {register.datos_coleccion2.distance} metros<br/>
-                                        <strong>Costo:</strong> {register.datos_coleccion2.cost} pesos<br/>
-                                    </div>
-                                </div>
-                                <hr/>
-                            </div>
-                        ))}
+
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Usuario ID</th>
+                                <th>Viaje ID</th>
+                                <th>Tiempo Inicial</th>
+                                <th>Tiempo Final</th>
+                                <th>Latitud Inicial</th>
+                                <th>Longitud Inicial</th>
+                                <th>Latitud Final</th>
+                                <th>Longitud Final</th>
+                                <th>Distancia</th>
+                                <th>Costo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {registers.map((register) => (
+                                <tr key={register.id}>
+                                    <td>{register.id_user}</td>
+                                    <td>{register.id_viaje}</td>
+                                    <td>{new Date(register.time).toLocaleString()}</td>
+                                    <td>{new Date(register.datos_coleccion2.time).toLocaleString()}</td>
+                                    <td>{register.latitud}</td>
+                                    <td>{register.longitude}</td>
+                                    <td>{register.datos_coleccion2.latitud}</td>
+                                    <td>{register.datos_coleccion2.longitude}</td>
+                                    <td>{register.datos_coleccion2.distance} mts</td>
+                                    <td>${register.datos_coleccion2.cost}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+
+                        <div className="total-viajes">
+                            <p className="p">Total de Viajes: {totalViajes}</p>
+                        </div>
+
+                        <div className="total-dinero-ganado">
+                            <p className="p">Total de Dinero Ganado: ${totalDineroGanado}</p>
+                        </div>
+
                     </div>
+
                 )}
             </div>
 
