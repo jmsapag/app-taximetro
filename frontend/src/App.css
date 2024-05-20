@@ -24,9 +24,21 @@
 }
 
 .registers {
-    margin: 20px;
+    margin: 30px;
+}
+
+.emergency {
+    margin: 30px;
+    border-radius: 30px;
+    background-color: rgba(253, 184, 19, 0.6);
+    padding: 20px;
 }
 
 .registers h2 {
     margin: 0;
+}
+
+.reg {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
