@@ -30,12 +30,6 @@ function App() {
             });
     }, []);
 
-/*    useEffect(() => {
-        if (lastMessage !== null) {
-            const alertData = JSON.parse(lastMessage.data);
-            setAlerts(prevAlerts => [...prevAlerts, alertData]);
-        }
-    }, [lastMessage]);*/
 
     useEffect(() => {
         if (lastMessage !== null) {
