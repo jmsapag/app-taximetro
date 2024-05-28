@@ -13,7 +13,7 @@ function App() {
     const { sendMessage, lastMessage, readyState } = useWebSocket('ws://localhost:8080');
 
     useEffect(() => {
-        fetch("/registers")
+        fetch("registers")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Error al obtener los registros");
@@ -29,6 +29,22 @@ function App() {
                 setLoading(false);
             });
     }, []);
+
+    useEffect(() => {
+        fetch("alerts")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error al obtener las alertas");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setAlerts(data)
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
+    }, [])
 
 
     useEffect(() => {

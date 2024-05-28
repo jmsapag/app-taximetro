@@ -6,7 +6,7 @@ const app = express()
 const port = 4000
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
-
+const alerts = []
 
 require("dotenv").config();
 
@@ -20,15 +20,9 @@ app.get("/registers", async (req, res) => {
     }
 });
 
-/*app.get("/emergency", async (req, res) => {
-    try {
-        const message = await publishAlert();
-        res.send(message);
-    } catch (error) {
-        console.error("Error al publicar o recibir el mensaje:", error);
-        res.status(500).json({ error: "Error al obtener el mensaje" });
-    }
-});*/
+app.get('/alerts', (req, res) => {
+    res.json(alerts);
+});
 
 app.listen(port, () => { console.log(`Example app listening on port ${port}`); })
 
@@ -86,7 +80,16 @@ module.exports = { appClient, publishMessage };
 // WEBSOCKETS
 
 function emergencyAlerts(json) {
-        broadcast(JSON.stringify(json));
+
+    const alertIndex = alerts.findIndex(alert => alert.id === json.id);
+
+    if (alertIndex === -1) {
+        alerts.push(json); // Add new alert if it doesn't exist
+    } else {
+        alerts.splice(alertIndex, 1); // Remove alert if it already exists
+    }
+
+    broadcast(JSON.stringify(json));
 }
 
 function broadcast(data) {
